@@ -6,6 +6,9 @@ var webpack = require("webpack"),
   CopyWebpackPlugin = require("copy-webpack-plugin"),
   HtmlWebpackPlugin = require("html-webpack-plugin"),
   WriteFilePlugin = require("write-file-webpack-plugin");
+const Dotenv = require("dotenv-webpack");
+
+// var dotenv = require("dotenv").config({ path: __dirname + "/.env" });
 
 // load the secrets
 var alias = {};
@@ -38,7 +41,7 @@ var options = {
     content: path.join(__dirname, "src", "js", "content.js"),
   },
   chromeExtensionBoilerplate: {
-    notHotReload: ["content"]
+    notHotReload: ["content"],
   },
   output: {
     path: path.join(__dirname, "build"),
@@ -75,10 +78,15 @@ var options = {
       .concat([".jsx", ".js", ".css"]),
   },
   plugins: [
+    //use .env file
+    // new webpack.DefinePlugin({
+    //   "process.env": dotenv.parsed,
+    // }),
     // clean the build folder
     new CleanWebpackPlugin(),
     // expose and write the allowed env vars on the compiled bundle
-    new webpack.EnvironmentPlugin(["NODE_ENV"]),
+    // new webpack.EnvironmentPlugin(["NODE_ENV", "REACT_APP_SERVER"]),
+    new Dotenv(),
     new CopyWebpackPlugin(["src/manifest.json"], { copyUnmodified: true }),
     new CopyWebpackPlugin([
       {

@@ -6,10 +6,15 @@ import QuestionList from "./components/QuestionList";
 import { hot } from "react-hot-loader";
 
 const App = (props) => {
+
+
   const [qlist, setQlist] = useState(false)
   const [contentPars, setContentPars] = useState([])
 
   const getPageData = () => {
+    console.log("PRINTING ENV VARIABLES");
+    console.log(process.env.NODE_ENV);
+    console.log(process.env.REACT_APP_SERVER);
     console.log("getting page data");
 
     let msg = {
