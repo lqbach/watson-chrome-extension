@@ -5,8 +5,10 @@ console.log("Chrome extension starting!");
 
 chrome.runtime.onMessage.addListener(retrievePageContent);
 
+
 function retrievePageContent(request, sender, sendResponse) {
-  if (request.txt === "hello") {
+  if (request.subject === "getParsFromContent") {
+    console.log("retrievePageContent() called")
     let paragraphs = document.getElementsByTagName("p");
     let pars = [];
     for (let i = 0; i < paragraphs.length; i++) {
@@ -18,4 +20,14 @@ function retrievePageContent(request, sender, sendResponse) {
       pars: pars,
     });
   }
+
+  if (request.subject === "highlightParagraph"){
+    let paragraphs = document.getElementsByTagName("p");
+    paragraphs[request.parId].style['backgroundColor'] = "purple";
+  }
+
+  if (request.subject === "highlightSentence"){
+    
+  }
+
 }

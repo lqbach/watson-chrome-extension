@@ -1,0 +1,18 @@
+.header {
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+}
+.options{
+    font: inherit;
+    padding: 0.5rem 1.5rem;
+    border: 1px solid #e0d1e2;
+    border-radius: 2px;
+    background: #e0d1e2;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    margin-right: 1rem;
+    text-decoration: none;
+    display: inline-block;
+}

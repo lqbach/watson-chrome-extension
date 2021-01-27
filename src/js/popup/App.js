@@ -3,22 +3,17 @@ import "./App.css";
 import React, { useEffect, useState } from "react";
 import Button from "./components/Button.js";
 import QuestionList from "./components/QuestionList";
+import Header from "./components/Header";
 import { hot } from "react-hot-loader";
 
 const App = (props) => {
-
-
-  const [qlist, setQlist] = useState(false)
-  const [contentPars, setContentPars] = useState([])
+  const [qlist, setQlist] = useState(false);
+  const [contentPars, setContentPars] = useState([]);
 
   const getPageData = () => {
-    console.log("PRINTING ENV VARIABLES");
-    console.log(process.env.NODE_ENV);
-    console.log(process.env.REACT_APP_SERVER);
-    console.log("getting page data");
-
+    console.log("calling getPageData()")
     let msg = {
-      txt: "hello",
+      subject: "getParsFromContent",
     };
 
     chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
@@ -29,23 +24,37 @@ const App = (props) => {
     setQlist(true);
   };
 
+  const selectPars = (paragraphs) => {
+    let parIndex = [];
+    for (let i = 0; i < paragraphs.length; i++) {
+      parIndex.push(i);
+    }
+
+    if (parIndex.length > 5) {
+      const shuffledIndex = parIndex.sort(() => 0.5 - Math.random());
+      parIndex = shuffledIndex.slice(0, 5);
+    }
+
+    let pars = parIndex.map((el) => ({ parIndex: el, par: paragraphs[el] }));
+    console.log("SELECTED FOLLOWING PARAGRAPHS FOR EXTRACTION:")
+    console.log(pars)
+    return pars;
+  };
 
   useEffect(() => {
     chrome.runtime.onMessage.addListener((msg, sender, response) => {
-      console.log("I heard something!");
       if (msg.from === "content" && msg.subject === "retrievePars") {
-        console.log("Retreived message from content");
-        console.log(msg.pars);
-        setContentPars(msg.pars);
+        let pars = selectPars(msg.pars);
+        setContentPars(pars);
       }
     });
   }, []);
 
   return (
     <div className="App">
-      <h1>Hello! </h1>
+      <Header />
       <Button onClick={getPageData}>Click Me!</Button>
-      <QuestionList paragraphs={contentPars} showList ={qlist}/>
+      <QuestionList paragraphs={contentPars} showList={qlist} />
     </div>
   );
 };
