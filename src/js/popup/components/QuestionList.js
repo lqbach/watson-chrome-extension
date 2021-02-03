@@ -36,10 +36,22 @@ const QuestionList = (props) => {
     // }
     props.paragraphs.forEach((par) => quests.push(fetchQuestions(par)));
 
-    Promise.all(quests).then(results => {
+    console.log("QUESTIONS PUSHED INTO QUEUE")
+    console.log(quests)
+
+    Promise.allSettled(quests).then(results => {
       console.log("CREATED NEW QUESTIONS");
-      console.log(newQuests);
-      setQuestions(newQuests);
+      let new_quests = [];
+
+      results.forEach((result) => {
+        console.log(result)
+        if (result.status === "fulfilled"){
+          console.log("CONCATTED QUESTIONS")
+          new_quests = new_quests.concat(result.value);
+        }
+      })
+      console.log(new_quests);
+      setQuestions(new_quests);
     })
     // //select 10 random questions to display
     // let questIndex = [];
@@ -78,7 +90,7 @@ const QuestionList = (props) => {
   // }, promises);
 
   if (props.showList == true) {
-    if (questions.length == 0 || fetching == true) {
+    if (questions.length == 0) {
       return <p>Generating questions...</p>;
     } else {
       return (
