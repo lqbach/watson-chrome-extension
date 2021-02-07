@@ -29,10 +29,10 @@ ul {
     opacity: 0.5;
 }
 .carousel__arrow--left {
-    left: 32px;
+    left: 5px;
 }
 .carousel__arrow--right {
-    right: 32px;
+    right: 5px;
 }
 .carousel__indicators {
     display: flex;

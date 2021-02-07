@@ -11,6 +11,8 @@
 }
 .carousel-slide__content {
     margin-bottom: 19px;
+    margin-left: 30px;
+    margin-right: 30px;
     font-family: 'Open Sans', 'Trebuchet MS', sans-serif;
     font-size: 16px;
 }

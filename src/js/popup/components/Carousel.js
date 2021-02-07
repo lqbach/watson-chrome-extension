@@ -4,13 +4,15 @@ import "./Carousel.css";
 
 const Carousel = (props) => {
   const [currIndex, setCurrIndex] = useState(0);
-  const [slides, setSlides] = useState([]);
+  const [slides, setSlides] = useState(props.slides);
 
   const goToSlide = (num) => {
+    console.log(slides.length)
     if (num < 0 || num > slides.length - 1) {
       return;
     }
     setCurrIndex(num);
+    console.log("CURRNET INDEX IS: currIndex");
   };
 
   const goToNextSlide = () => {
@@ -75,7 +77,7 @@ const Carousel = (props) => {
                   ? "carousel__indicator carousel__indicator--active"
                   : "carousel__indicator"
               }
-              onClick={goToSlide(index)}
+              onClick={() => goToSlide(index)}
             />
           </li>
         ))}
