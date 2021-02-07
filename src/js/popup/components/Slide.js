@@ -10,15 +10,15 @@ const Slide = (props) => {
           : "carousel__slide"
       }
     >
-      <p className="carousel-slide__content">{props.slide.content}</p>
+      <p className="carousel-slide__content">{props.slide.question}</p>
 
       <p>
         <strong className="carousel-slide__author">
-          {props.slide.author}
+          {props.slide.answer}
         </strong>
         ,{" "}
         <small className="carousel-slide__source">
-          {props.slide.source}
+          {props.slide.parId}
         </small>
       </p>
     </li>
