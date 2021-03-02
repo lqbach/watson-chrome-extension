@@ -24,3 +24,12 @@
     font-style: italic;
     color: #888;
 }
+
+.hint-panel{
+    padding: 10px;
+}
+
+.hint-btn{
+    cursor: pointer;
+    margin: 10px 5px;
+}

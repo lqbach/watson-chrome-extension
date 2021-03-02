@@ -2,56 +2,23 @@ import React, { useEffect, useState } from "react";
 import Button from "./Button.js";
 import QuestionList from "./QuestionList.js";
 import Carousel from "./Carousel.js";
+import bubbaImg from "../../../img/bubba.png";
 import "./Main.css";
 
 const Main = (props) => {
-  const [qlist, setQlist] = useState(false);
   const [contentPars, setContentPars] = useState([]);
+  const [showCarousel, setShowCarousel] = useState(false);
+  const [showAnswers, setShowAnswers] = useState(false);
 
-  const carouselSlidesData = [
-    {
-      content:
-        "Tomorrow, you will be released. If you are bored of brawling with thieves and want to achieve something there is a rare blue flower that grows on the eastern slopes. Pick one of these flowers. If you can carry it to the top of the mountain, you may find what you were looking for in the first place.",
-      author: "Bane",
-      source: "facebook",
-    },
-    {
-      content:
-        "You have learn to bury your guilt with anger. I will teach you to confront it and to face the truth.",
-      author: "Ra's Al Ghul",
-      source: "Snapchat",
-    },
-    {
-      content:
-        "Introduce a little anarchy, upset the established order and everything becomes chaos. I'm an agent of chaos. Oh, and you know the thing about chaos? It's fair.",
-      author: "Joker",
-      source: "facebook",
-    },
-    {
-      content:
-        "I can't do that as Bruce Wayne... as a man. I'm flesh and blood. I can be ignored, destroyed. But as a symbol, I can be incorruptible, I can be everlasting.",
-      author: "Bruce Wayne",
-      source: "facebook",
-    },
-    {
-      content:
-        "But it's not who you are underneath... it's what you do that defines you.",
-      author: "Rachel Dawes",
-      source: "twitter",
-    },
-    {
-      content:
-        "When their enemies were at the gates the Romans would suspend democracy and appoint one man to protect the city. It wasn't considered an honor, it was a public service.",
-      author: "John Blake",
-      source: "Google+",
-    },
-    {
-      content:
-        "Master Wayne, you've been gone a long time. You look very fashionable. Apart from the mud.",
-      author: "Alfred Pennyworth",
-      source: "twitter",
-    },
-  ];
+  const handleCarouselLoad = () => {
+    console.log("triggered handle carouselLoad");
+    setShowCarousel(true);
+    console.log(showCarousel);
+  };
+
+  const handleShowAnswersClick = () => {
+    setShowAnswers(true);
+  };
 
   const getPageData = () => {
     console.log("calling getPageData()");
@@ -63,8 +30,6 @@ const Main = (props) => {
       var tab = tabs[0];
       chrome.tabs.sendMessage(tab.id, msg);
     });
-
-    setQlist(true);
   };
 
   const selectPars = (paragraphs) => {
@@ -87,6 +52,7 @@ const Main = (props) => {
   useEffect(() => {
     chrome.runtime.onMessage.addListener((msg, sender, response) => {
       if (msg.from === "content" && msg.subject === "retrievePars") {
+        console.log("CALLING CHROME RUNTIME USEEFFECT LISTENER");
         console.log(contentPars);
         let pars = selectPars(msg.pars);
         setContentPars(pars);
@@ -97,12 +63,44 @@ const Main = (props) => {
   return (
     <div className="main">
       <div className="main-container">
-        <div className="button-container">
-          <Button onClick={getPageData}>Click Me!</Button>
+        <div className={showCarousel ? "hide-content" : "show-content"}>
+          <h1>Click On Bubba to Generate Questions!</h1>
+          <div className="button-container">
+            <img
+              className="bubbaImgLrg"
+              title="Generate new questions"
+              src={bubbaImg}
+              onClick={getPageData}
+              alt="Generate Questions"
+            />
+          </div>
         </div>
-        <div className="carousel-container">
-          <Carousel slides={carouselSlidesData} paragraphs={contentPars} />
+
+        <div className={showCarousel ? "show-content" : "hide-content"}>
+          <div className="carousel-container">
+            <Carousel
+              paragraphs={contentPars}
+              onCarouselChange={handleCarouselLoad}
+              showAnswers={showAnswers}
+            />
+          </div>
+          <div className="button-panel">
+            {showAnswers ? (
+              <div>
+                <img
+                  className="bubbaImgSmall"
+                  title="Generate new questions"
+                  src={bubbaImg}
+                  onClick={getPageData}
+                  alt="Generate Questions"
+                />
+              </div>
+            ) : (
+              <button onClick={handleShowAnswersClick}>Show Answers</button>
+            )}
+          </div>
         </div>
+
         {/* <QuestionList paragraphs={contentPars} showList={qlist} /> */}
       </div>
     </div>

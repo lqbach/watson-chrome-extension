@@ -14,7 +14,7 @@ const App = (props) => {
 
   return (
     <div className="App">
-      <Header />
+      {/* <Header /> */}
       <Main />
       <Footer />
     </div>
