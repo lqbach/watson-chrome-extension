@@ -6,7 +6,6 @@ import load_gif from "../../../img/loading.gif";
 const Carousel = (props) => {
   const [currIndex, setCurrIndex] = useState(0);
   const [slides, setSlides] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
 
   const goToSlide = (num) => {
@@ -93,7 +92,7 @@ const Carousel = (props) => {
   useEffect(() => {
     if (isMounted.current) {
       props.onCarouselChange();
-      setIsLoading(true);
+      props.setIsLoading(true);
       console.log("USE EFFECT CALLED BECAUSE PARAGRAPHS HAVE BEEN CHANGED");
       console.log(props.paragraphs);
       let quests = [];
@@ -118,7 +117,7 @@ const Carousel = (props) => {
         new_quests = selectRandom(new_quests, 5);
         console.log(new_quests);
         setSlides(new_quests);
-        setIsLoading(false);
+        props.setIsLoading(false);
       });
     } else {
       isMounted.current = true;
@@ -179,7 +178,7 @@ const Carousel = (props) => {
   //   props.onCarouselChange();
   // }, [props.paragraphs]);
 
-  return isLoading ? (
+  return props.isLoading ? (
     <img src={load_gif} className="animated-gif" alt="loading..." />
   ) : (
     <div className="carousel">

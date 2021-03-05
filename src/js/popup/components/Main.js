@@ -9,6 +9,7 @@ const Main = (props) => {
   const [contentPars, setContentPars] = useState([]);
   const [showCarousel, setShowCarousel] = useState(false);
   const [showAnswers, setShowAnswers] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleCarouselLoad = () => {
     console.log("triggered handle carouselLoad");
@@ -81,11 +82,13 @@ const Main = (props) => {
             <Carousel
               paragraphs={contentPars}
               onCarouselChange={handleCarouselLoad}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
               showAnswers={showAnswers}
             />
           </div>
           <div className="button-panel">
-            {showAnswers ? (
+            {!isLoading && (showAnswers ? (
               <div>
                 <img
                   className="bubbaImgSmall"
@@ -97,7 +100,7 @@ const Main = (props) => {
               </div>
             ) : (
               <button onClick={handleShowAnswersClick}>Show Answers</button>
-            )}
+            ))}
           </div>
         </div>
 
