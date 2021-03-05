@@ -88,19 +88,20 @@ const Main = (props) => {
             />
           </div>
           <div className="button-panel">
-            {!isLoading && (showAnswers ? (
-              <div>
-                <img
-                  className="bubbaImgSmall"
-                  title="Generate new questions"
-                  src={bubbaImg}
-                  onClick={getPageData}
-                  alt="Generate Questions"
-                />
-              </div>
-            ) : (
-              <button onClick={handleShowAnswersClick}>Show Answers</button>
-            ))}
+            {!isLoading &&
+              (showAnswers ? (
+                <div>
+                  <img
+                    className="bubbaImgSmall"
+                    title="Generate new questions"
+                    src={bubbaImg}
+                    onClick={getPageData}
+                    alt="Generate Questions"
+                  />
+                </div>
+              ) : (
+                <button onClick={handleShowAnswersClick}>Show Answers</button>
+              ))}
           </div>
         </div>
 
